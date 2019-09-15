@@ -11,6 +11,7 @@ fn prevent_sleep() {
     // SystemPowerInformation struct is not expressed in WinNT.h
     // https://docs.microsoft.com/en-us/windows/win32/power/system-power-information-str
     #[repr(C)]
+    #[derive(Debug)]
     struct SystemPowerInformationStruct {
         MaxIdlenessAllowed: ULONG,
         Idleness: ULONG,
@@ -37,12 +38,12 @@ fn prevent_sleep() {
             SystemPowerInformation,
             null_mut(),
             0,
-            &teststruct,
+            &mut teststruct as *mut _ as *mut _,
             size_of::<SystemPowerInformationStruct>() as u32
         )
     };
     println!("{}", result);
-    println!("{}", teststruct);
+    println!("{:?}", teststruct);
     // Eventually loop a timer based on above
     // use winapi::um::winbase::SetThreadExecutionState;
     // use winapi::um::winnt::{ES_CONTINUOUS, ES_SYSTEM_REQUIRED};
