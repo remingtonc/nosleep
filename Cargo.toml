@@ -1,0 +1,20 @@
+[package]
+name = "nosleep"
+version = "0.1.0"
+authors = ["Remington Campbell <code@remington.io>"]
+edition = "2018"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+
+[target.'cfg(windows)'.dependencies]
+winapi = { version = "0.3", features = ["powerbase", "winnt", "std", "winbase"] }
+
+[[bin]]
+name = "nosleep"
+path = "src/main.rs"
+
+[[bin]]
+name = "sampler"
+path = "src/sampler.rs"
