@@ -9,4 +9,12 @@ edition = "2018"
 [dependencies]
 
 [target.'cfg(windows)'.dependencies]
-winapi = { version = "0.3", features = ["powerbase", "winnt", "std"] }
+winapi = { version = "0.3", features = ["powerbase", "winnt", "std", "winbase"] }
+
+[[bin]]
+name = "nosleep"
+path = "src/main.rs"
+
+[[bin]]
+name = "sampler"
+path = "src/sampler.rs"
