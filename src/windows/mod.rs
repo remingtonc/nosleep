@@ -1,6 +1,9 @@
 extern crate winapi;
 
 use winapi::shared::minwindef::{ULONG, UCHAR};
+use winapi::um::winbase::SetThreadExecutionState;
+use winapi::um::winnt::{ES_CONTINUOUS, ES_SYSTEM_REQUIRED, ES_AWAYMODE_REQUIRED};
+
 // SystemPowerInformation struct is not expressed in WinNT.h
 // https://docs.microsoft.com/en-us/windows/win32/power/system-power-information-str
 #[repr(C)]
@@ -12,27 +15,17 @@ struct _SYSTEM_POWER_INFORMATION {
     CoolingMode: UCHAR
 }
 
-pub fn prevent_sleep() {
-    println!("Technically, {}s before sleep.", get_idle_time_remaining());
-    use std::{thread, time};
-    use winapi::um::winbase::SetThreadExecutionState;
-    use winapi::um::winnt::{ES_CONTINUOUS, ES_SYSTEM_REQUIRED, ES_AWAYMODE_REQUIRED};
-    let mut occurs = 0;
-    let start = time::Instant::now();
-    let sleep_time = time::Duration::from_secs(50);
-    while occurs < 30 {
-        println!("Setting flags and sleeping for {:?} seconds!", sleep_time);
-        // Without ES_AWAYMODE_REQUIRED system still slept, necessary.
-        unsafe {
-            SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_AWAYMODE_REQUIRED)
-        };
-        thread::sleep(sleep_time);
-        println!("Still alive for {:?}!", start.elapsed());
-        occurs += 1;
-    }
+pub fn default_sleep() {
     println!("Setting system power to default!");
     unsafe {
         SetThreadExecutionState(ES_CONTINUOUS)
+    };
+}
+
+pub fn prevent_sleep() {
+    println!("Setting system power to not sleep!");
+    unsafe {
+        SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED | ES_AWAYMODE_REQUIRED)
     };
 }
 
