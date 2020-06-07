@@ -2,7 +2,14 @@ use iced::{Align, Checkbox, Column, Element, Sandbox, Settings};
 use ::nosleep;
 
 pub fn main() {
-    NoSleep::run(Settings::default())
+    NoSleep::run(Settings {
+            window: iced::window::Settings {
+                size: (500, 500),
+                ..iced::window::Settings::default()
+            },
+            ..Settings::default()
+        }
+    )
 }
 
 #[derive(Default)]
