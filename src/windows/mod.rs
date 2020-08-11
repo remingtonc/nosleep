@@ -7,6 +7,7 @@ use winapi::um::winnt::{ES_CONTINUOUS, ES_SYSTEM_REQUIRED, ES_AWAYMODE_REQUIRED}
 // SystemPowerInformation struct is not expressed in WinNT.h
 // https://docs.microsoft.com/en-us/windows/win32/power/system-power-information-str
 #[repr(C)]
+#[allow(non_snake_case)]
 #[derive(Debug)]
 struct _SYSTEM_POWER_INFORMATION {
     MaxIdlenessAllowed: ULONG,
