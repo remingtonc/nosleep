@@ -5,7 +5,7 @@ use ::nosleep;
 pub fn main() {
     NoSleep::run(Settings {
             window: iced::window::Settings {
-                size: MonitorHandle::size().to_logical(MonitorHandle::scale_factor()) as (u32, u32),
+                size: (500, 500),
                 resizable: false,
                 ..iced::window::Settings::default()
             },
