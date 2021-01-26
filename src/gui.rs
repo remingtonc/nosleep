@@ -1,10 +1,12 @@
-use iced::{Align, Checkbox, Column, Element, Sandbox, Settings};
+use iced::{Align, Checkbox, Column, Element, Sandbox, Settings, Length};
+use iced::winit::monitor::MonitorHandle;
 use ::nosleep;
 
 pub fn main() {
     NoSleep::run(Settings {
             window: iced::window::Settings {
-                size: (500, 500),
+                size: MonitorHandle::size().to_logical(MonitorHandle::scale_factor()) as (u32, u32),
+                resizable: false,
                 ..iced::window::Settings::default()
             },
             ..Settings::default()
@@ -57,6 +59,8 @@ impl Sandbox for NoSleep {
                     Message::Toggled
                 )
             )
+            .width(Length::Fill)
+            .height(Length::Fill)
             .into()
     }
 }
