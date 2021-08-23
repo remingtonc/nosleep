@@ -10,6 +10,9 @@ edition = "2018"
 
 [target.'cfg(windows)'.dependencies]
 winapi = { version = "0.3", features = ["powerbase", "winnt", "std", "winbase"] }
+iced = "0.2"
+log = "0.4"
+env_logger = "0.8.3"
 
 [[bin]]
 name = "nosleep"
@@ -18,3 +21,7 @@ path = "src/main.rs"
 [[bin]]
 name = "sampler"
 path = "src/sampler.rs"
+
+[[bin]]
+name = "gui"
+path = "src/gui.rs"
